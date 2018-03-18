@@ -43,48 +43,18 @@ def testBench():
     y= Signal(intbv(0)[8:])
 
     mov=MOVAVG(clk, reset, x, y)
-
-    
+   
     @always(delay(10))
     def clkgen():
         clk.next = not clk
 
     @instance
     def stimulus():
-        yield delay(20)
-        x.next=5
-        yield delay(20)
-        x.next=10
-        reset.next=1
-        yield delay(20)
-        x.next=15
-        reset.next=0
-        yield delay(20)
-        x.next=0
-        yield delay(20)
-        x.next=1
-        yield delay(20)
-        x.next=2
-        yield delay(20)
-        x.next=20
-        yield delay(20)
-        x.next=3
-        yield delay(20)
-        x.next=2
-        yield delay(20)
-        x.next=4
-        yield delay(20)
-        x.next=6
-        yield delay(20)
-        x.next=1
-        yield delay(20)
-        x.next=6
-        yield delay(20)
-        x.next=7
-        yield delay(20)
-        x.next=1
+         "input for test bench taken from text file test.txt"
+        for line in open('test.txt'):
+            x.next=int(line)
+            yield delay(20)
         
-
         raise StopSimulation
         
     return mov, clkgen, stimulus
